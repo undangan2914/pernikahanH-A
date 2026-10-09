@@ -42,7 +42,7 @@ export const data = {
                 finish: 'Selesai'
             }
         },
-        address: 'Kp. Lorem, RT 000/ RW 000, Desa.Lorem, Kec.Ipsum, Kab.Lorem, Lorem (1234)'
+        address: 'parungkamal RT05/RW08 kec.lumbir kab.banyumas'
     },
 
     link: {

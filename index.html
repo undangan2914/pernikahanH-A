@@ -253,5 +253,29 @@
 
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script src="src/main.js" type="module"></script>
+
+<!-- Bagian Fitur Bagikan Undangan -->
+<section id="share-section" class="py-5 text-center" style="background-color: #f9f9f9; padding: 40px 20px; margin-top: 30px;">
+    <div class="container">
+        <h3>Bagikan Undangan</h3>
+        <p style="color: #666; margin-bottom: 20px;">Bagikan tautan undangan ini kepada keluarga, sahabat, atau rekan-rekan.</p>
+        
+        <!-- Kotak Link Otomatis -->
+        <div style="max-width: 500px; margin: 0 auto 15px auto; display: flex; gap: 10px;">
+            <input type="text" id="shareLink" readonly style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; background: #fff; font-size: 14px;">
+        </div>
+        
+        <!-- Tombol Aksi -->
+        <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+            <button id="btnCopy" onclick="copyToClipboard()" style="padding: 10px 20px; background-color: #333; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: 500;">
+                Salin Link
+            </button>
+            <button id="btnWhatsApp" onclick="shareToWhatsApp()" style="padding: 10px 20px; background-color: #25D366; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: 500;">
+                Kirim ke WhatsApp
+            </button>
+        </div>
+    </div>
+</section>
+
 </body>
 </html>

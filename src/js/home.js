@@ -72,3 +72,35 @@ export const home = () => {
 
     initializeHome();
 };
+
+// 1. Otomatis mengisi kotak input dengan URL website saat ini ketika halaman dimuat
+window.addEventListener('DOMContentLoaded', () => {
+    const shareInput = document.getElementById('shareLink');
+    if (shareInput) {
+        shareInput.value = window.location.href;
+    }
+});
+
+// 2. Fungsi untuk menyalin link ke memori perangkat
+function copyToClipboard() {
+    const shareInput = document.getElementById('shareLink');
+    if (!shareInput) return;
+    
+    shareInput.select();
+    shareInput.setSelectionRange(0, 99999); // Untuk mendukung perangkat mobile
+    
+    navigator.clipboard.writeText(shareInput.value).then(() => {
+        alert("Link undangan berhasil disalin!");
+    }).catch(err => {
+        console.error('Gagal menyalin text: ', err);
+    });
+}
+
+// 3. Fungsi untuk membagikan pesan dan link langsung ke WhatsApp
+function shareToWhatsApp() {
+    const currentUrl = window.location.href;
+    const pesan = `Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami. Berikut link undangannya:\n\n${currentUrl}\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terima kasih.`;
+    
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(pesan)}`;
+    window.open(whatsappUrl, '_blank');
+}
