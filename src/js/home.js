@@ -72,7 +72,7 @@ export const home = () => {
 
     initializeHome();
 
-    // --- FITUR BAGIKAN LINK DENGAN NAMA TAMU ---
+   // --- FITUR BAGIKAN LINK DENGAN NAMA TAMU ---
     window.updateShareLink = function() {
         const guestInput = document.getElementById('guestNameInput');
         const shareInput = document.getElementById('shareLink');
@@ -94,6 +94,9 @@ export const home = () => {
     }
 
     window.copyToClipboard = function() {
+        // Panggil updateShareLink agar memastikan link terisi nama terbaru sebelum disalin
+        window.updateShareLink();
+
         const input = document.getElementById('shareLink');
         if (!input) return;
         
@@ -108,6 +111,9 @@ export const home = () => {
     };
 
     window.shareToWhatsApp = function() {
+        // Panggil updateShareLink agar memastikan link terisi nama terbaru sebelum dikirim
+        window.updateShareLink();
+
         const input = document.getElementById('shareLink');
         const currentUrl = input ? input.value : window.location.href;
         
