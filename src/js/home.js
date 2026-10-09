@@ -71,36 +71,52 @@ export const home = () => {
     };
 
     initializeHome();
-};
 
-// 1. Otomatis mengisi kotak input dengan URL website saat ini ketika halaman dimuat
-window.addEventListener('DOMContentLoaded', () => {
+    // --- FITUR BAGIKAN LINK DENGAN NAMA TAMU ---
+    window.updateShareLink = function() {
+        const guestInput = document.getElementById('guestNameInput');
+        const shareInput = document.getElementById('shareLink');
+        if (!shareInput) return;
+
+        const baseUrl = window.location.origin + window.location.pathname;
+        const guestName = guestInput ? guestInput.value.trim() : "";
+
+        if (guestName) {
+            shareInput.value = `${baseUrl}?to=${encodeURIComponent(guestName)}`;
+        } else {
+            shareInput.value = baseUrl;
+        }
+    };
+
     const shareInput = document.getElementById('shareLink');
     if (shareInput) {
-        shareInput.value = window.location.href;
+        shareInput.value = window.location.origin + window.location.pathname;
     }
-});
 
-// 2. Fungsi untuk menyalin link ke memori perangkat
-function copyToClipboard() {
-    const shareInput = document.getElementById('shareLink');
-    if (!shareInput) return;
-    
-    shareInput.select();
-    shareInput.setSelectionRange(0, 99999); // Untuk mendukung perangkat mobile
-    
-    navigator.clipboard.writeText(shareInput.value).then(() => {
-        alert("Link undangan berhasil disalin!");
-    }).catch(err => {
-        console.error('Gagal menyalin text: ', err);
-    });
-}
+    window.copyToClipboard = function() {
+        const input = document.getElementById('shareLink');
+        if (!input) return;
+        
+        input.select();
+        input.setSelectionRange(0, 99999);
+        
+        navigator.clipboard.writeText(input.value).then(() => {
+            alert("Link undangan personal berhasil disalin!");
+        }).catch(err => {
+            console.error('Gagal menyalin text: ', err);
+        });
+    };
 
-// 3. Fungsi untuk membagikan pesan dan link langsung ke WhatsApp
-function shareToWhatsApp() {
-    const currentUrl = window.location.href;
-    const pesan = `Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami. Berikut link undangannya:\n\n${currentUrl}\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terima kasih.`;
-    
-    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(pesan)}`;
-    window.open(whatsappUrl, '_blank');
-}
+    window.shareToWhatsApp = function() {
+        const input = document.getElementById('shareLink');
+        const currentUrl = input ? input.value : window.location.href;
+        
+        const guestInput = document.getElementById('guestNameInput');
+        const guestName = guestInput && guestInput.value.trim() ? guestInput.value.trim() : "Bapak/Ibu/Saudara/i";
+
+        const pesan = `Kepada Yth. ${guestName},\n\nTanpa mengurangi rasa hormat, kami mengundang Anda untuk menghadiri acara pernikahan kami. Berikut link undangannya:\n\n${currentUrl}\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Anda berkenan hadir. Terima kasih.`;
+        
+        const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(pesan)}`;
+        window.open(whatsappUrl, '_blank');
+    };
+};
